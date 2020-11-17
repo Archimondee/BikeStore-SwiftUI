@@ -41,6 +41,8 @@ struct ContentView: View {
     ProductModel(id: 9, namaproduk: "Sepeda 9", fotoproduk:"foto9", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
     ProductModel(id: 10, namaproduk: "Sepeda 10", fotoproduk:"foto10", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100)
   ]
+  
+  @State var jumlahkeranjang: Int = 0
   var body: some View {
     //Product()
     
@@ -48,7 +50,7 @@ struct ContentView: View {
       ScrollView{
         ForEach(data){ row in
           VStack(spacing: 10){
-            Product(data: row)
+            Product(data: row, jumlah: self.$jumlahkeranjang)
           }.padding()
         }
       }
@@ -59,9 +61,8 @@ struct ContentView: View {
           Button(action:{print("Ok")}){
             Image(systemName: "person.fill")
           }
-          Button(action:{print("Ok")}){
-            Image(systemName: "cart.fill")
-          }
+          KeranjangView(jumlah: $jumlahkeranjang)
+          
         }
       )
     }.accentColor(Color.secondary)
@@ -75,9 +76,29 @@ struct ContentView_Previews: PreviewProvider {
   }
 }
 
+struct KeranjangView: View{
+  @Binding var jumlah: Int
+  var body: some View{
+    ZStack{
+      Button(action:{print("Ok")}){
+        Image(systemName: "cart.fill")
+      }
+      Text("\(jumlah)")
+        .foregroundColor(Color.white)
+        .frame(width:10, height:10)
+        .font(.body)
+        .padding(5)
+        .background(Color.red)
+        .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+        .offset(x: 10, y: -10)
+    }
+  }
+}
+
 
 struct Product: View{
   let data: ProductModel
+  @Binding var jumlah: Int
   
   
   var body: some View{
@@ -125,23 +146,30 @@ struct Product: View{
       .padding(.trailing)
       .padding(.leading)
       
-      Button(action: {print("Belanja")}){
-        HStack{
-          Spacer()
-          HStack{
-            Image(systemName: "cart")
-            Text("Tambah ke keranjang")
-              .font(.callout)
-              .padding()
-          }
-          Spacer()
-        }
-      }.background(Color.green)
-      .foregroundColor(.white)
-      .cornerRadius(10)
-      .padding()
+      TambahKeranjang(jumlah: $jumlah)
     }
     .background(Color("warna"))
     .cornerRadius(10)
+  }
+}
+
+struct TambahKeranjang: View{
+  @Binding var jumlah: Int
+  var body: some View{
+    Button(action: {self.jumlah += 1}){
+      HStack{
+        Spacer()
+        HStack{
+          Image(systemName: "cart")
+          Text("Tambah ke keranjang")
+            .font(.callout)
+            .padding()
+        }
+        Spacer()
+      }
+    }.background(Color.green)
+    .foregroundColor(.white)
+    .cornerRadius(10)
+    .padding()
   }
 }
