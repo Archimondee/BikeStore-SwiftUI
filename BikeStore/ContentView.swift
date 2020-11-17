@@ -8,41 +8,24 @@
 import SwiftUI
 
 //Model Data
-struct ProductModel: Identifiable{
-  let id: Int
-  let namaProduk: String
-  let fotoProduk: String
-  let hargaProduk: String
-  let lokasi: String
-  let ratingCount: Int
-  let jumlahRating: Int
-  
-  init(id: Int, namaproduk: String, fotoproduk: String, hargaproduk: String, lokasi: String, ratingcount: Int, jumlahrating: Int){
-    self.id = id
-    self.namaProduk = namaproduk
-    self.fotoProduk = fotoproduk
-    self.hargaProduk = hargaproduk
-    self.lokasi = lokasi
-    self.ratingCount = ratingcount
-    self.jumlahRating = jumlahrating
-  }
-}
+
 
 struct ContentView: View {
-  let data: [ProductModel] = [
-    ProductModel(id: 1, namaproduk: "Sepeda 1", fotoproduk:"foto1", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
-    ProductModel(id: 2, namaproduk: "Sepeda 2", fotoproduk:"foto2", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
-    ProductModel(id: 3, namaproduk: "Sepeda 3", fotoproduk:"foto3", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
-    ProductModel(id: 4, namaproduk: "Sepeda 4", fotoproduk:"foto4", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
-    ProductModel(id: 5, namaproduk: "Sepeda 5", fotoproduk:"foto5", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
-    ProductModel(id: 6, namaproduk: "Sepeda 6", fotoproduk:"foto6", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
-    ProductModel(id: 7, namaproduk: "Sepeda 7", fotoproduk:"foto7", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
-    ProductModel(id: 8, namaproduk: "Sepeda 8", fotoproduk:"foto8", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
-    ProductModel(id: 9, namaproduk: "Sepeda 9", fotoproduk:"foto9", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
-    ProductModel(id: 10, namaproduk: "Sepeda 10", fotoproduk:"foto10", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100)
+  let data: [DataModel] = [
+    DataModel(id: 1, namaproduk: "Sepeda 1", fotoproduk:"foto1", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
+    DataModel(id: 2, namaproduk: "Sepeda 2", fotoproduk:"foto2", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
+    DataModel(id: 3, namaproduk: "Sepeda 3", fotoproduk:"foto3", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
+    DataModel(id: 4, namaproduk: "Sepeda 4", fotoproduk:"foto4", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
+    DataModel(id: 5, namaproduk: "Sepeda 5", fotoproduk:"foto5", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
+    DataModel(id: 6, namaproduk: "Sepeda 6", fotoproduk:"foto6", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
+    DataModel(id: 7, namaproduk: "Sepeda 7", fotoproduk:"foto7", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
+    DataModel(id: 8, namaproduk: "Sepeda 8", fotoproduk:"foto8", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
+    DataModel(id: 9, namaproduk: "Sepeda 9", fotoproduk:"foto9", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100),
+    DataModel(id: 10, namaproduk: "Sepeda 10", fotoproduk:"foto10", hargaproduk: "2000000", lokasi: "Bekasi", ratingcount: 3, jumlahrating: 100)
   ]
   
-  @State var jumlahkeranjang: Int = 0
+  //@State var jumlahkeranjang: Int = 0
+  @ObservedObject var keranjang = GlobalObject()
   var body: some View {
     //Product()
     
@@ -50,7 +33,7 @@ struct ContentView: View {
       ScrollView{
         ForEach(data){ row in
           VStack(spacing: 10){
-            Product(data: row, jumlah: self.$jumlahkeranjang)
+            Product(data: row, keranjang: self.keranjang)
           }.padding()
         }
       }
@@ -61,8 +44,9 @@ struct ContentView: View {
           Button(action:{print("Ok")}){
             Image(systemName: "person.fill")
           }
-          KeranjangView(jumlah: $jumlahkeranjang)
-          
+          NavigationLink(destination: DetailView(globaldata: keranjang)){
+            KeranjangView(keranjang: keranjang)
+          }
         }
       )
     }.accentColor(Color.secondary)
@@ -77,13 +61,14 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct KeranjangView: View{
-  @Binding var jumlah: Int
+  //@Binding var jumlah: Int
+  @ObservedObject var keranjang: GlobalObject
+  
   var body: some View{
     ZStack{
-      Button(action:{print("Ok")}){
         Image(systemName: "cart.fill")
-      }
-      Text("\(jumlah)")
+      
+      Text("\(self.keranjang.jumlah)")
         .foregroundColor(Color.white)
         .frame(width:10, height:10)
         .font(.body)
@@ -97,9 +82,9 @@ struct KeranjangView: View{
 
 
 struct Product: View{
-  let data: ProductModel
-  @Binding var jumlah: Int
-  
+  let data: DataModel
+  //@Binding var jumlah: Int
+  @ObservedObject var keranjang: GlobalObject
   
   var body: some View{
     VStack(alignment: .leading){
@@ -146,7 +131,7 @@ struct Product: View{
       .padding(.trailing)
       .padding(.leading)
       
-      TambahKeranjang(jumlah: $jumlah)
+      TambahKeranjang(keranjang: keranjang)
     }
     .background(Color("warna"))
     .cornerRadius(10)
@@ -154,9 +139,11 @@ struct Product: View{
 }
 
 struct TambahKeranjang: View{
-  @Binding var jumlah: Int
+  //@Binding var jumlah: Int
+  
+  @ObservedObject var keranjang: GlobalObject
   var body: some View{
-    Button(action: {self.jumlah += 1}){
+    Button(action: {self.keranjang.jumlah += 1}){
       HStack{
         Spacer()
         HStack{
@@ -171,5 +158,15 @@ struct TambahKeranjang: View{
     .foregroundColor(.white)
     .cornerRadius(10)
     .padding()
+  }
+}
+
+struct DetailView: View{
+  @ObservedObject var globaldata: GlobalObject
+  var body: some View{
+    NavigationView{
+      Text("Detail")
+        .navigationBarTitle("Detail")
+    }
   }
 }

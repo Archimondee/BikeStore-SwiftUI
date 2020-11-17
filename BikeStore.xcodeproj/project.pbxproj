@@ -13,6 +13,8 @@
 		F7985157255EF7B3003A0CCF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7985156255EF7B3003A0CCF /* Preview Assets.xcassets */; };
 		F7985162255EF7B3003A0CCF /* BikeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7985161255EF7B3003A0CCF /* BikeStoreTests.swift */; };
 		F798516D255EF7B3003A0CCF /* BikeStoreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F798516C255EF7B3003A0CCF /* BikeStoreUITests.swift */; };
+		F7AD4E7325644ACF00A39A82 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD4E7225644ACF00A39A82 /* DataModel.swift */; };
+		F7AD4E7825644B5D00A39A82 /* GlobalObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD4E7725644B5D00A39A82 /* GlobalObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,8 @@
 		F7985168255EF7B3003A0CCF /* BikeStoreUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BikeStoreUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F798516C255EF7B3003A0CCF /* BikeStoreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeStoreUITests.swift; sourceTree = "<group>"; };
 		F798516E255EF7B3003A0CCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F7AD4E7225644ACF00A39A82 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		F7AD4E7725644B5D00A39A82 /* GlobalObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,8 @@
 				F7985153255EF7B3003A0CCF /* Assets.xcassets */,
 				F7985158255EF7B3003A0CCF /* Info.plist */,
 				F7985155255EF7B3003A0CCF /* Preview Content */,
+				F7AD4E7225644ACF00A39A82 /* DataModel.swift */,
+				F7AD4E7725644B5D00A39A82 /* GlobalObject.swift */,
 			);
 			path = BikeStore;
 			sourceTree = "<group>";
@@ -260,7 +266,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7985152255EF7AD003A0CCF /* ContentView.swift in Sources */,
+				F7AD4E7825644B5D00A39A82 /* GlobalObject.swift in Sources */,
 				F7985150255EF7AD003A0CCF /* BikeStoreApp.swift in Sources */,
+				F7AD4E7325644ACF00A39A82 /* DataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
